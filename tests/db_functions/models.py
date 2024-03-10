@@ -7,9 +7,15 @@ from django.db import models
 
 class Author(models.Model):
     name = models.CharField(max_length=50)
+    email = models.EmailField(null=True, blank=True)
     alias = models.CharField(max_length=50, null=True, blank=True)
     goes_by = models.CharField(max_length=50, null=True, blank=True)
     age = models.PositiveSmallIntegerField(default=30)
+
+
+class SecretAuthor(Author):
+    name = models.CharField(max_length=60, secret=True)
+    email = models.EmailField(secret=True, null=True, blank=True)
 
 
 class Article(models.Model):
