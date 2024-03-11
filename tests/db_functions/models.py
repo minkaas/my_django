@@ -29,6 +29,16 @@ class Article(models.Model):
     views = models.PositiveIntegerField(default=0)
 
 
+class SecretArticle(Article):
+    views = models.PositiveIntegerField(default=0, secret=True)
+    pdf = models.FileField(secret=True, null=True, blank=True)
+
+
+class ArticleRepository(models.Model):
+    name = models.CharField(max_length=50)
+    url = models.URLField(secret=True)
+
+
 class Fan(models.Model):
     name = models.CharField(max_length=50)
     age = models.PositiveSmallIntegerField(default=30)
