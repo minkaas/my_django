@@ -7,9 +7,15 @@ from django.db import models
 
 class Author(models.Model):
     name = models.CharField(max_length=50)
+    email = models.EmailField(null=True, blank=True)
     alias = models.CharField(max_length=50, null=True, blank=True)
     goes_by = models.CharField(max_length=50, null=True, blank=True)
     age = models.PositiveSmallIntegerField(default=30)
+
+
+class SecretAuthor(Author):
+    name = models.CharField(max_length=60, secret=True)
+    email = models.EmailField(secret=True, null=True, blank=True)
 
 
 class Article(models.Model):
@@ -21,6 +27,16 @@ class Article(models.Model):
     published = models.DateTimeField(null=True, blank=True)
     updated = models.DateTimeField(null=True, blank=True)
     views = models.PositiveIntegerField(default=0)
+
+
+class SecretArticle(Article):
+    views = models.PositiveIntegerField(default=0, secret=True)
+    pdf = models.FileField(secret=True, null=True, blank=True)
+
+
+class ArticleRepository(models.Model):
+    name = models.CharField(max_length=50)
+    url = models.URLField(secret=True)
 
 
 class Fan(models.Model):
